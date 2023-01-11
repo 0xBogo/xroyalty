@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { Xrpl } from '../provider/XrplProvider';
-import logo from "../assets/img/logo_word_white.png";
+import logo from "../assets/img/logo.jpg";
 
 function Header() {
   const { connectWallet, account } = useContext(Xrpl);
@@ -11,6 +11,7 @@ function Header() {
       <div className="container">
         <a href="/">
           <img src={logo} />
+          <div>Xroyalty NFT</div>
         </a>
         <div className="links">
           <Link to="/">Mint</Link>

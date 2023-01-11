@@ -1,7 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react';
 const xrpl = require("xrpl");
 
-const network = "wss://s.altnet.rippletest.net:51233";
+// const network = "wss://s.altnet.rippletest.net:51233";
+const network = "wss://xrplcluster.com";
 
 export const Xrpl = createContext({
     _xrpl: null,

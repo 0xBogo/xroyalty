@@ -44,7 +44,7 @@ function Home() {
       console.log(JSON.stringify(offerIds));
     } while (selectedNfts.length < amount);
     try {
-      fetch("http://localhost:8080/buy", {
+      fetch("https://xroyaltybackend.vercel.app//buy", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'

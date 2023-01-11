@@ -8,7 +8,6 @@ import female from "../assets/img/female.png";
 function Home() {
   const { _xrpl, client, account } = useContext(Xrpl);
   const [nfts, setNfts] = useState([]);
-  const [amount, setAmount] = useState(null);
 
   const buy = async () => {
     if (!account) {
@@ -20,46 +19,33 @@ function Home() {
       alert("You are not in whitelist");
       return;
     }
-    if (!amount) {
-      alert("Please input amount");
-      return;
-    }
     const nftAmount = nfts?.length;
-    let selectedNfts = [];
-    let offerIds = [];
+
     do {
       const selected = Math.floor(Math.random() * nftAmount);
-      if (selectedNfts.includes(selected)) continue;
       const tokenId = nfts[selected].tokenID;
       if (keptTokens.includes(tokenId)) continue;
-      selectedNfts = [...selectedNfts, selected];
       console.log(selected + "/" + nftAmount);
-
       const nftSellOffers = await client.request({
         method: "nft_sell_offers",
         nft_id: tokenId
       });
-      offerIds = [...offerIds, nftSellOffers.result.offers[0].nft_offer_index];
-      // console.log(offerIds);
-      console.log(JSON.stringify(offerIds));
-    } while (selectedNfts.length < amount);
-    try {
-      fetch("https://xroyaltybackend.vercel.app/buy", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(offerIds)
-      }).then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          data.forEach(item => window.open(item, '_blank'));
-        });
-      getNfts();
-    } catch (err) {
-      console.log(err);
-    }
-
+      console.log(JSON.stringify({ offerId: nftSellOffers.result.offers[0].nft_offer_index }));
+      try {
+        fetch("https://xroyaltybackend.vercel.app/buy", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ offerId: nftSellOffers.result.offers[0].nft_offer_index })
+        }).then((res) => res.json())
+          .then((data) => {
+            window.open(data.url, '_blank');
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    } while (false);
   }
 
   async function getNfts() {
@@ -67,7 +53,7 @@ function Home() {
     console.log(client);
     const { result: { account_nfts } } = await client.request({
       method: "account_nfts",
-      account: "rEkGmeuCkcUQMT8p4MdkzZpvTZxShjWa3w"
+      account: "r3oZbSy6odamkEd4QveFjwRikvB3UFR9h"
     });
     setNfts([]);
     account_nfts?.forEach((item) => {
@@ -77,19 +63,19 @@ function Home() {
   }
 
   useEffect(() => {
-    getNfts();
+    const interval = setInterval(() => getNfts(), 5000)
+    return () => clearInterval(interval);
   }, [client]);
 
   return (
     <div id="home">
       <div className="title">Mint NFT</div>
-      <div className="description">{nfts?.length} NFTs left</div>
+      {/* <div className="description">{nfts?.length} NFTs left</div> */}
       <div className="mint">
         <div className="img">
           <img src={male} />
           <img src={female} />
         </div>
-        <input type="number" min={1} placeholder="NFT Amount to buy" value={amount} onChange={e => setAmount(e.target.value)} />
         <button onClick={buy}>Mint Now</button>
       </div>
     </div>

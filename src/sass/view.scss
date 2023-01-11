@@ -1,0 +1,112 @@
+#view {
+    max-width: 1200px;
+    margin-inline: auto;
+    font-family: "jcorbs", Sans-serif;
+    font-weight: 700;
+    color: #fff;
+
+    .title {
+        text-align: center;
+        font-size: 64px;
+        color: #fff;
+        margin: 36px auto;
+    }
+
+    .view {
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+
+        .card {
+            margin-inline: auto;
+            padding: 30px 80px;
+            width: 900px;
+            background: #5a8eae;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            border-radius: 20px;
+
+            .name {
+                font-size: 36px;
+                font-weight: 600;
+                
+            }
+
+            .description {
+                font-family: "Montserrat", Sans-serif;
+                color: #111111;
+            }
+
+            .id {
+                font-family: "Montserrat", Sans-serif;
+                color: #111111;
+            }
+
+            .content {
+                margin-top: 20px;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 50px;
+
+                img {
+                    width: 280px;
+                    border: 5px #fff solid;
+                    border-radius: 15px;
+                }
+
+                .attributes {
+                    text-align: center;
+                    font-size: 24px;
+                    font-weight: 600;
+                    width: calc(100% - 280px);
+
+                    .title {
+                        font-size: 28px;
+                        color: #fff;
+                    }
+
+                    .list {
+                        margin-top: 10px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 30px;
+                        font-family: "Montserrat", Sans-serif;
+                        font-weight: 200;
+                        line-height: 28px;
+
+                        .type {
+                            font-weight: 600;
+                        }
+
+                        .value {
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            color: #111111;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        .no-nft,
+        .loading {
+            padding: 50px 0;
+            background: #bf942d;
+            color: #7a4f01;
+            width: 60%;
+            text-align: center;
+            font-size: 28px;
+            border-radius: 20px;
+        }
+    }
+}

@@ -15,7 +15,7 @@ function Home() {
       return;
     }
     // console.log(Date.now(), new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime());
-    if (!whitelist.includes(account) && Date.now() < new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime()) {
+    if (!whitelist.includes(account) && Date.now() < new Date(Date.UTC('2023', '01', '11', '20', '44', '00')).getTime()) {
       alert("You are not in whitelist");
       return;
     }
@@ -53,7 +53,7 @@ function Home() {
     console.log(client);
     const { result: { account_nfts } } = await client.request({
       method: "account_nfts",
-      account: "r3oZbSy6odamkEd4QveFjwRikvB3UFR9h"
+      account: "rEkGmeuCkcUQMT8p4MdkzZpvTZxShjWa3w"
     });
     setNfts([]);
     account_nfts?.forEach((item) => {

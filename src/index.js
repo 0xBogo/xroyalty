@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import XrplProvider from './provider/XrplProvider';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <XrplProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </XrplProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

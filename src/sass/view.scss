@@ -1,5 +1,6 @@
 #view {
     max-width: 1200px;
+    width: 95%;
     margin-inline: auto;
     font-family: "jcorbs", Sans-serif;
     font-weight: 700;
@@ -10,6 +11,11 @@
         font-size: 64px;
         color: #fff;
         margin: 36px auto;
+
+        @media screen and (max-width: 860px) {
+            margin-top: 72px;
+            font-size: 48px;
+        }
     }
 
     .view {
@@ -31,20 +37,51 @@
             gap: 10px;
             border-radius: 20px;
 
+            @media screen and (max-width: 1200px) {
+                width: 720px;
+            }
+
+            @media screen and (max-width: 960px) {
+                width: 600px;
+            }
+
+            @media screen and (max-width: 840px) {
+                width: unset;
+                max-width: 90%;
+            }
+
             .name {
                 font-size: 36px;
                 font-weight: 600;
-                
+
+                @media screen and (max-width: 840px) {
+                    font-size: 24px;
+                }
             }
 
             .description {
                 font-family: "Montserrat", Sans-serif;
                 color: #111111;
+
+                @media screen and (max-width: 840px) {
+                    font-size: 16px;
+                }
             }
 
             .id {
                 font-family: "Montserrat", Sans-serif;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 color: #111111;
+
+                @media screen and (max-width: 960px) {
+                    font-size: 16px;
+                }
+
+                @media screen and (max-width: 840px) {
+                    display: none;
+                }
             }
 
             .content {
@@ -55,10 +92,18 @@
                 align-items: flex-start;
                 gap: 50px;
 
+                @media screen and (max-width: 840px) {
+                    justify-content: center;
+                }
+
                 img {
                     width: 280px;
                     border: 5px #fff solid;
                     border-radius: 15px;
+
+                    @media screen and (max-width: 840px) {
+                        width: 90%;
+                    }
                 }
 
                 .attributes {
@@ -66,6 +111,10 @@
                     font-size: 24px;
                     font-weight: 600;
                     width: calc(100% - 280px);
+
+                    @media screen and (max-width: 840px) {
+                        display: none;
+                    }
 
                     .title {
                         font-size: 28px;

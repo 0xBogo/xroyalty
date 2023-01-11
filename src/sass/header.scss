@@ -14,14 +14,27 @@
         grid-template-columns: 1fr auto 1fr;
         align-items: center;
 
+        @media screen and (max-width: 860px) {
+            display: flex;
+            justify-content: space-between;
+        }
+
         a {
             display: flex;
             align-items: center;
             gap: 12px;
 
             img {
-                height: 48px;
+                height: 32px;
                 display: inline-block;
+
+                @media screen and (max-width: 860px) {
+                    height: 20px;
+                }
+
+                @media screen and (max-width: 680px) {
+                    height: 16px;
+                }
             }
 
             div {
@@ -29,6 +42,10 @@
                 font-size: 24px;
                 font-weight: 600;
                 color: #fff;
+
+                @media screen and (max-width: 860px) {
+                    font-size: 20px;
+                }
             }
         }
 
@@ -41,6 +58,17 @@
             font-size: 20px;
             font-weight: 600;
             color: #fff;
+
+            @media screen and (max-width: 860px) {
+                position: fixed;
+                bottom: 20px;
+                width: 90%;
+
+                a {
+                    padding: 10px 20px;
+                    background-color: #111111;
+                }
+            }
         }
 
         .connect-btn {
@@ -57,6 +85,11 @@
                 &:hover {
                     background-color: #cc0000;
                     color: #fff;
+                }
+
+                @media screen and (max-width: 860px) {
+                    font-size: 14px;
+                    padding: 8px 16px;
                 }
             }
         }

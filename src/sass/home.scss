@@ -1,5 +1,6 @@
 #home {
     max-width: 1200px;
+    width: 95%;
     margin-inline: auto;
     font-family: "jcorbs", Sans-serif;
     font-weight: 700;
@@ -10,6 +11,11 @@
         font-size: 64px;
         color: #fff;
         margin: 36px auto;
+
+        @media screen and (max-width: 860px) {
+            margin-top: 72px;
+            font-size: 48px;
+        }
     }
 
     .description {
@@ -30,6 +36,10 @@
 
             img {
                 width: 30%;
+
+                @media screen and (max-width: 860px) {
+                    width: 40%;
+                }
             }
         }
 
@@ -58,6 +68,11 @@
                 background-color: #cc0000;
                 color: #fff;
                 box-shadow: 5px 5px 15px #fff;
+            }
+
+            @media screen and (max-width: 860px) {
+                position: sticky;
+                bottom: 36px;
             }
         }
     }

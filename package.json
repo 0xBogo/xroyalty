@@ -22,7 +22,7 @@
     "xumm-sdk": "^1.7.1"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "concurrently \"yarn serverNode\" \"yarn client\"",
     "build": "react-app-rewired build",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
     "serverNode": "node ./src/server.js",

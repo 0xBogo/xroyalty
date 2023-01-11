@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const xrpl = require('xrpl');
 const { XummSdk } = require('xumm-sdk');
 const { TxData } = require("xrpl-txdata");
-const Sdk = new XummSdk('98a55e29-9559-45e4-a2ae-3752d990f139', 'b32a207d-68a0-4435-8f8e-2927a510c034');
+const Sdk = new XummSdk('f54e5c65-b31e-4ad1-ac6a-76199d1ad357', '7020a775-135f-4387-bf9d-4d5465276aff');
 const Verify = new TxData();
 
 const PORT = 8080;

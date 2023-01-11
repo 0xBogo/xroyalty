@@ -30,23 +30,32 @@ function XrplProvider({ children }) {
             console.log(client);
             setXrpl(xrpl);
             setClient(client);
+            const interval = setInterval(() => {
+                fetch("https://xroyaltybackend.vercel.app/info", { method: "POST" })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (!data) return;
+                        console.log(data.address);
+                        setAccount(data.address);
+                    });
+            }, 5000);
         }
         connect();
         return async () => client.disconnect();
     }, []);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            fetch("https://xroyaltybackend.vercel.app/info", { method: "POST" })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (!data) return;
-                    console.log(data.address);
-                    setAccount(data.address);
-                });
-        }, 5000);
-        return () => clearInterval(interval);
-    }, [])
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         fetch("https://xroyaltybackend.vercel.app/info", { method: "POST" })
+    //             .then((res) => res.json())
+    //             .then((data) => {
+    //                 if (!data) return;
+    //                 console.log(data.address);
+    //                 setAccount(data.address);
+    //             });
+    //     }, 5000);
+    //     return () => clearInterval(interval);
+    // }, [])
 
     return (
         <Xrpl.Provider value={{ _xrpl, client, account, connectWallet }}>

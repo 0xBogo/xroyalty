@@ -16,10 +16,10 @@ function Home() {
       return;
     }
     // console.log(Date.now(), new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime());
-    // if (!whitelist.includes(account) && Date.now() < new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime()) {
-    //   alert("You are not in whitelist");
-    //   return;
-    // }
+    if (!whitelist.includes(account) && Date.now() < new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime()) {
+      alert("You are not in whitelist");
+      return;
+    }
     if (!amount) {
       alert("Please input amount");
       return;

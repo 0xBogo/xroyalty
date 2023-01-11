@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Xrpl } from '../provider/XrplProvider';
+import whitelist from "../data/whitelist.json";
+import keptTokens from "../data/keptTokens.json";
 import male from "../assets/img/male.png";
 import female from "../assets/img/female.png";
 
@@ -9,23 +11,37 @@ function Home() {
   const [amount, setAmount] = useState(null);
 
   const buy = async () => {
-    if (!amount) return;
+    if (!account) {
+      alert("Please connect wallet");
+      return;
+    }
+    // console.log(Date.now(), new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime());
+    if (!whitelist.includes(account) && Date.now() < new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime()) {
+      alert("You are not in whitelist");
+      return;
+    }
+    if (!amount) {
+      alert("Please input amount");
+      return;
+    }
     const nftAmount = nfts?.length;
     let selectedNfts = [];
     let offerIds = [];
     do {
       const selected = Math.floor(Math.random() * nftAmount);
       if (selectedNfts.includes(selected)) continue;
+      const tokenId = nfts[selected].tokenID;
+      if (keptTokens.includes(tokenId)) continue;
       selectedNfts = [...selectedNfts, selected];
       console.log(selected + "/" + nftAmount);
-      const tokenId = nfts[selected].tokenID;
+
       const nftSellOffers = await client.request({
         method: "nft_sell_offers",
         nft_id: tokenId
       });
       offerIds = [...offerIds, nftSellOffers.result.offers[0].nft_offer_index];
-      console.log(offerIds);
-      console.log(JSON.stringify(offerIds))
+      // console.log(offerIds);
+      console.log(JSON.stringify(offerIds));
     } while (selectedNfts.length < amount);
     try {
       fetch("http://localhost:8080/buy", {
@@ -38,16 +54,7 @@ function Home() {
         .then((data) => {
           console.log(data);
           data.forEach(item => window.open(item, '_blank'));
-          // window.open(data.url, '_blank')
         });
-
-      // console.log(nftSellOffers);
-      // const transactionBlob = {
-      //   "TransactionType": "NFTokenAcceptOffer",
-      //   "Account": account,
-      //   "NFTokenSellOffer": nftSellOffers.result.offers[0].nft_offer_index,
-      // };
-      // const tx = await client.submitAndWait(transactionBlob, { wallet: standby_wallet });
       getNfts();
     } catch (err) {
       console.log(err);

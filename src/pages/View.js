@@ -10,6 +10,10 @@ function View() {
     useEffect(() => {
         async function getNfts() {
             if (!client) return;
+            if (!account) {
+                alert("Please connect wallet");
+                return;
+            }
             console.log(client);
             const { result: { account_nfts } } = await client.request({
                 method: "account_nfts",
@@ -19,7 +23,7 @@ function View() {
             setNfts([]);
             account_nfts?.forEach((item) => {
                 const tokenUri = _xrpl.convertHexToString(item.URI);
-                fetch(tokenUri).then((response) => response.json()).then(data => setNfts(p => [...p, {...data, tokenID: item.NFTokenID}]));
+                fetch(tokenUri).then((response) => response.json()).then(data => setNfts(p => [...p, { ...data, tokenID: item.NFTokenID }]));
             })
         }
         getNfts();
@@ -30,7 +34,7 @@ function View() {
             <div className="title">Your NFTs({nftAmount})</div>
             <div className="view">
                 {
-                    nfts !== null
+                    account
                         ? nfts.length
                             ? nfts.map((item, index) => (
                                 <div className="card" key={index}>
@@ -54,7 +58,7 @@ function View() {
                                 </div>
                             ))
                             : <div className="no-nft">You don't have any NFTs!</div>
-                        : <div className="loading">Loading...</div>
+                        : <div className="loading">Wallet not connected</div>
                 }
             </div>
         </div>

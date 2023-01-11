@@ -16,10 +16,10 @@ function Home() {
       return;
     }
     // console.log(Date.now(), new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime());
-    if (!whitelist.includes(account) && Date.now() < new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime()) {
-      alert("You are not in whitelist");
-      return;
-    }
+    // if (!whitelist.includes(account) && Date.now() < new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime()) {
+    //   alert("You are not in whitelist");
+    //   return;
+    // }
     if (!amount) {
       alert("Please input amount");
       return;
@@ -44,7 +44,7 @@ function Home() {
       console.log(JSON.stringify(offerIds));
     } while (selectedNfts.length < amount);
     try {
-      fetch("https://xroyaltybackend.vercel.app//buy", {
+      fetch("https://xroyaltybackend.vercel.app/buy", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'

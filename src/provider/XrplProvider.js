@@ -18,7 +18,7 @@ function XrplProvider({ children }) {
 
 
     async function connectWallet() {
-        fetch("http://localhost:8080", { method: "POST" })
+        fetch("https://xroyaltybackend.vercel.app", { method: "POST" })
             .then((res) => res.json())
             .then((data) => window.open(data.url, '_blank'));
     }
@@ -37,14 +37,14 @@ function XrplProvider({ children }) {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            fetch("http://localhost:8080/info", { method: "POST" })
+            fetch("https://xroyaltybackend.vercel.app/info", { method: "POST" })
                 .then((res) => res.json())
                 .then((data) => {
                     if (!data) return;
                     console.log(data.address);
                     setAccount(data.address);
                 });
-        }, 2000);
+        }, 5000);
         return () => clearInterval(interval);
     }, [])
 

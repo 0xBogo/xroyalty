@@ -15,6 +15,10 @@ body {
     transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
 }
 
+::-webkit-scrollbar {
+    display: none;
+  }
+
 @font-face {
     font-family: 'jcorbs';
     src: url('../assets/fonts/Jcorbs.woff');

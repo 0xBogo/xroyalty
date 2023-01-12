@@ -13,7 +13,7 @@ export const Xrpl = createContext({
 
 function XrplProvider({ children }) {
     const [_xrpl, setXrpl] = useState(null);
-    const [account, setAccount] = useState("rf1U7c3oJmmqaLLLw2mCQ8BizAE8j3JRNG");
+    const [account, setAccount] = useState(null);
     const [client, setClient] = useState(null);
     const [url, setUrl] = useState(null);
 

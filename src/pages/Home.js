@@ -70,7 +70,7 @@ function Home() {
   return (
     <div id="home">
       <div className="title">Mint NFT</div>
-      {/* <div className="description">{nfts?.length} NFTs left</div> */}
+      <div className="description">{nfts?.length} NFTs left</div>
       <div className="mint">
         <div className="img">
           <img src={male} />

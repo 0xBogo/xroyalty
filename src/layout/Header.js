@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
 import { Xrpl } from '../provider/XrplProvider';
 import logo from "../assets/img/logo_word_white.png";
 import close from "../assets/img/close.svg";
 
 function Header() {
   const { connectWallet, disconnectWallet, account } = useContext(Xrpl);
-  const [isBoxOpened, setIsBoxOpened] = useState(true);
+  const [isBoxOpened, setIsBoxOpened] = useState(false);
 
   const openBox = () => {
     setIsBoxOpened(true);

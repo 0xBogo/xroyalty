@@ -6,7 +6,7 @@ import close from "../assets/img/close.svg";
 
 function Header() {
   const { connectWallet, disconnectWallet, account } = useContext(Xrpl);
-  const [isBoxOpened, setIsBoxOpened] = useState(false);
+  const [isBoxOpened, setIsBoxOpened] = useState(true);
 
   const openBox = () => {
     setIsBoxOpened(true);

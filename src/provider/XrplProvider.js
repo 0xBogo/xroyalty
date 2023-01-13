@@ -4,6 +4,9 @@ const xrpl = require("xrpl");
 const network = "wss://s.altnet.rippletest.net:51233";
 // const network = "wss://xrplcluster.com";
 
+// const server = "https://xroyaltybackend.vercel.app";
+const server = "http://localhost:8080";
+
 export const Xrpl = createContext({
     _xrpl: null,
     client: null,
@@ -20,7 +23,7 @@ function XrplProvider({ children }) {
 
 
     async function connectWallet() {
-        fetch("https://xroyaltybackend.vercel.app", { method: "POST" })
+        fetch(server, { method: "POST" })
             .then((res) => res.json())
             .then((data) => {
                 setUrl(data.url);
@@ -60,10 +63,11 @@ function XrplProvider({ children }) {
         }
         console.log(_xrpl.convertStringToHex(url));
         const interval = setInterval(() => {
-            fetch(`https://xroyaltybackend.vercel.app/${_xrpl.convertStringToHex(url)}`, { method: "POST" })
+            fetch(`${server}/${_xrpl.convertStringToHex(url)}`, { method: "POST" })
                 .then((res) => res.json())
                 .then((data) => {
                     if (!data) return;
+                    if (!data.address) return;
                     console.log(data.address);
                     setAccount(data.address);
                 });

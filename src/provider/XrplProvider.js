@@ -8,7 +8,8 @@ export const Xrpl = createContext({
     _xrpl: null,
     client: null,
     account: null,
-    connectWallet: () => { }
+    connectWallet: () => { },
+    disconnectWallet: () => { }
 })
 
 function XrplProvider({ children }) {
@@ -25,6 +26,10 @@ function XrplProvider({ children }) {
                 setUrl(data.url);
                 window.open(data.url, '_blank');
             });
+    }
+
+    async function disconnectWallet() {
+        setUrl(null);
     }
 
     useEffect(() => {
@@ -49,7 +54,10 @@ function XrplProvider({ children }) {
     }, []);
 
     useEffect(() => {
-        if (!url) return;
+        if (!url) {
+            setAccount(null);
+            return;
+        }
         console.log(_xrpl.convertStringToHex(url));
         const interval = setInterval(() => {
             fetch(`https://xroyaltybackend.vercel.app/${_xrpl.convertStringToHex(url)}`, { method: "POST" })
@@ -59,12 +67,12 @@ function XrplProvider({ children }) {
                     console.log(data.address);
                     setAccount(data.address);
                 });
-        }, 5000);
+        }, 3000);
         return () => clearInterval(interval);
     }, [url])
 
     return (
-        <Xrpl.Provider value={{ _xrpl, client, account, connectWallet }}>
+        <Xrpl.Provider value={{ _xrpl, client, account, connectWallet, disconnectWallet }}>
             {children}
         </Xrpl.Provider>
     )

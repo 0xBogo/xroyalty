@@ -1,85 +1,68 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Xrpl } from '../provider/XrplProvider';
-import whitelist from "../data/whitelist.json";
-import keptTokens from "../data/keptTokens.json";
-import male from "../assets/img/male.png";
-import female from "../assets/img/female.png";
 
-function Home() {
-  const { _xrpl, client, account } = useContext(Xrpl);
-  const [nfts, setNfts] = useState([]);
+function View() {
 
-  const buy = async () => {
-    if (!account) {
-      alert("Please connect wallet");
-      return;
-    }
-    // console.log(Date.now(), new Date(Date.UTC('2023', '01', '11', '18', '30', '00')).getTime());
-    if (!whitelist.includes(account) && Date.now() < new Date(Date.UTC('2023', '01', '11', '20', '44', '00')).getTime()) {
-      alert("You are not in whitelist");
-      return;
-    }
-    const nftAmount = nfts?.length;
+    const { _xrpl, client, account } = useContext(Xrpl);
+    const [nfts, setNfts] = useState([]);
+    const [nftAmount, setNftAmount] = useState("");
 
-    do {
-      const selected = Math.floor(Math.random() * nftAmount);
-      const tokenId = nfts[selected].tokenID;
-      if (keptTokens.includes(tokenId)) continue;
-      console.log(selected + "/" + nftAmount);
-      const nftSellOffers = await client.request({
-        method: "nft_sell_offers",
-        nft_id: tokenId
-      });
-      console.log(JSON.stringify({ offerId: nftSellOffers.result.offers[0].nft_offer_index }));
-      try {
-        fetch("https://xroyaltybackend.vercel.app/buy", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ offerId: nftSellOffers.result.offers[0].nft_offer_index })
-        }).then((res) => res.json())
-          .then((data) => {
-            window.open(data.url, '_blank');
-          });
-      } catch (err) {
-        console.log(err);
-      }
-    } while (false);
-  }
+    useEffect(() => {
+        async function getNfts() {
+            if (!client) return;
+            if (!account) {
+                // alert("Please connect wallet");
+                return;
+            }
+            console.log(client);
+            const { result: { account_nfts } } = await client.request({
+                method: "account_nfts",
+                account: account
+            });
+            setNftAmount(account_nfts.length);
+            setNfts([]);
+            account_nfts?.forEach((item) => {
+                const tokenUri = _xrpl.convertHexToString(item.URI);
+                fetch(tokenUri).then((response) => response.json()).then(data => setNfts(p => [...p, { ...data, tokenID: item.NFTokenID }]));
+            });
+        }
+        getNfts();
+    }, [client, account]);
 
-  async function getNfts() {
-    if (!client) return;
-    console.log(client);
-    const { result: { account_nfts } } = await client.request({
-      method: "account_nfts",
-      account: "rEkGmeuCkcUQMT8p4MdkzZpvTZxShjWa3w"
-    });
-    setNfts([]);
-    account_nfts?.forEach((item) => {
-      const tokenUri = _xrpl.convertHexToString(item.URI);
-      fetch(tokenUri).then((response) => response.json()).then(data => setNfts(p => [...p, { ...data, tokenID: item.NFTokenID }]));
-    })
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => getNfts(), 5000)
-    return () => clearInterval(interval);
-  }, [client]);
-
-  return (
-    <div id="home">
-      <div className="title">Mint NFT</div>
-      <div className="description">{nfts?.length} NFTs left</div>
-      <div className="mint">
-        <div className="img">
-          <img src={male} />
-          <img src={female} />
+    return (
+        <div id="home">
+            <div className="title">Your NFTs{account ? `(${nftAmount})`: null}</div>
+            <div className="view">
+                {
+                    account
+                        ? nfts.length
+                            ? nfts.map((item, index) => (
+                                <div className="card" key={index}>
+                                    <div className="name">{item.name}</div>
+                                    <div className="description">{item.description}</div>
+                                    <div className="id">ID: {item.tokenID}</div>
+                                    <div className="content">
+                                        <img src={item.image} />
+                                        <div className="attributes">
+                                            <div className="title">Attributes</div>
+                                            {
+                                                item.attributes.map((attribute, index) => (
+                                                    <div className="list" key={index}>
+                                                        <div className="type">{attribute.trait_type}</div>
+                                                        <div className="value">{attribute.value}</div>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                            : <div className="no-nft">You don't have any NFTs!</div>
+                        : <div className="loading">Wallet not connected</div>
+                }
+            </div>
         </div>
-        <button onClick={buy}>Mint Now</button>
-      </div>
-    </div>
-  )
+    )
 }
 
-export default Home;
+export default View;
